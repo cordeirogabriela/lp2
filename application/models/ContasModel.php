@@ -17,7 +17,8 @@ class ContasModel extends CI_Model{
             $aux['parceiro'] = $row['parceiro'];
             $aux['descricao'] = $row['descricao'];
             $aux['valor'] = $row['valor'];
-            $aux['status'] = $this->statusHandler($row);
+            $aux['status'] = $this->statusHandler($row).
+                            $this->editHandler($row);
             $data[]= $aux;
        }
     
@@ -31,6 +32,13 @@ class ContasModel extends CI_Model{
         $html = '<a><i id="'.$row['id'];
         $html .= '"class="fas fa-check-circle mr-3 ';
         $html .= $color.'-text pay_btn"></i></a>';
+        return $html;
+    }
+
+    public function editHandler($row){
+        $html = '<a><i id="'.$row['id'];
+        $html .= '"class="fas fa-edit mr-3 ';
+        $html .= 'indigo-text edit_btn"></i></a>';
         return $html;
     }
 
@@ -94,5 +102,10 @@ class ContasModel extends CI_Model{
     public function status_conta() {
         $data = $this->input->post();
         $this->bill->status($data);
+    }
+
+    public function get_conta(){
+        $data = $this->input->post();
+        print_r($this->bill->getConta($data));
     }
 }

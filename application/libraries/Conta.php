@@ -25,6 +25,12 @@ class Conta extends CI_Object {
         return $res->result_array();
     }
 
+    public function getConta($data){
+        $res = $this->db->get_where('conta', $data);
+        return $res->row_array();
+    }
+
+
     /**
      * Gera uma lista de contas.
      * 
@@ -50,9 +56,17 @@ class Conta extends CI_Object {
         $this->db->update('conta', $data, 'id = '.$data['id']);
     }
 
+
+    // pra deletar $sql = "DELETE conta WHERE id = ".$data['id'];
+
+
     public function status($data) {
-        $sql = "UPDATE conta SET liquidada = liquidada + 1 WHERE id = ".$data['id'];
+        $sql = "UPDATE conta SET liquidada = MOD(liquidada + 1, 2) WHERE id = ".$data['id'];
+              
         $this->db->query($sql);
+
+        $rs = $this->db->get_where('conta', ['id'=> $data['id']]);
+        print_r($rs->row()->liquidada);
     }
 
     public function total($tipo, $mes, $ano) {

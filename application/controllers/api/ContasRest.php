@@ -14,8 +14,13 @@ class ContasRest extends MyRestController {
     }
 
     function status_conta_post() {
-        $res = $this->model->status_conta();
-        $this->response($res, RESTController::HTTP_OK);
+		$res = $this->model->status_conta();
+		$this->response($res, RESTController::HTTP_OK);
     }
+
+	function get_conta_post(){
+		$res = $this->model->get_conta();
+		$this->response($res, RESTController::HTTP_OK);
+	}
 	
 }

@@ -375,7 +375,7 @@ abstract class RestController extends MY_Controller {
         parent::__construct();
 
         // Disable XML Entity (security vulnerability)
-        libxml_disable_entity_loader(TRUE);
+        @libxml_disable_entity_loader(TRUE);
 
         // Check to see if PHP is equal to or greater than 5.4.x
         if (is_php('5.4') === FALSE)
