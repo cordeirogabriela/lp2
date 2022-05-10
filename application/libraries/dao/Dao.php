@@ -5,17 +5,33 @@ include_once APPPATH.'libraries/util/CI_Object.php';
 
 class Dao extends CI_Object {
 
-    protected $table = '';
+	protected $table = '';
 
-    function __construct($table)
-    {
-        $this->table = $table;
+	function __construct($table)
+	{
+		$this->table = $table;
+	}
+
+	public function create($data){
+		$this->db->insert($this->table, $data);
+		return $this->db->insert_id();
+	}
+
+	public function getById($id){
+		$v['id'] = $id;
+		$rs = $this->db->get_where($this->table, $v);
+		return $rs->row_array();
+	}
+
+	
+    public function getByUserId($id){
+        $v['id_pessoa'] = $id;
+        $rs = $this->db->get_where($this->table, $v);
+
+        return $rs->row_array();
     }
 
-    public function create($data){
-        $this->db->insert($this->table, $data);
-        return $this->db->insert_id();
-    }
+	
 
 
 }

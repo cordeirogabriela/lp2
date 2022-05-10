@@ -1,6 +1,8 @@
 <?php 
 defined('BASEPATH') OR exit('No direct script access allowed');
 include_once APPPATH.'libraries/component/Table.php';
+include_once APPPATH.'libraries/util/ButtonGenerator.php';
+include_once APPPATH.'libraries/util/statusHandler.php';
 
 class ContasModel extends CI_Model{
 
@@ -17,8 +19,8 @@ class ContasModel extends CI_Model{
             $aux['parceiro'] = $row['parceiro'];
             $aux['descricao'] = $row['descricao'];
             $aux['valor'] = $row['valor'];
-            $aux['status'] = $this->statusHandler($row).
-                            $this->editHandler($row);
+            $aux['status'] = ButtonGenerator::statusHandler($row).
+                            ButtonGenerator::editHandler($row);
             $data[]= $aux;
        }
     
@@ -27,20 +29,20 @@ class ContasModel extends CI_Model{
        return $table->getHTML();
     }
 
-    public function statusHandler($row){
-        $color = $row['liquidada'] ? 'blue' : 'red';
-        $html = '<a><i id="'.$row['id'];
-        $html .= '"class="fas fa-check-circle mr-3 ';
-        $html .= $color.'-text pay_btn"></i></a>';
-        return $html;
-    }
+    // public function statusHandler($row){
+    //     $color = $row['liquidada'] ? 'blue' : 'red';
+    //     $html = '<a><i id="'.$row['id'];
+    //     $html .= '"class="fas fa-check-circle mr-3 ';
+    //     $html .= $color.'-text pay_btn"></i></a>';
+    //     return $html;
+    // }
 
-    public function editHandler($row){
-        $html = '<a><i id="'.$row['id'];
-        $html .= '"class="fas fa-edit mr-3 ';
-        $html .= 'indigo-text edit_btn"></i></a>';
-        return $html;
-    }
+    // public function editHandler($row){
+    //     $html = '<a><i id="'.$row['id'];
+    //     $html .= '"class="fas fa-edit mr-3 ';
+    //     $html .= 'indigo-text edit_btn"></i></a>';
+    //     return $html;
+    // }
 
     public function cria($tipo) {
         if(sizeof($_POST) == 0) return;
